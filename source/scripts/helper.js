@@ -169,10 +169,10 @@ function detectBrowser() {
             SCRIPT.SCRIPT_ID++;
             console.log("Script id loaded : " + SCRIPT.SCRIPT_ID + " with src : " + this.src);
 
-            var filename = this.src.substring(this.src.lastIndexOf("/") + 1, this.src.lastIndexOf("."));
+            //var filename = this.src.substring(this.src.lastIndexOf("/") + 1, this.src.lastIndexOf("."));
             //console.log(filename)
-            filename = filename.replace(".", "_");
-            eval("try{SCRIPT.SINHRO_LOAD._" + filename + "(s)}catch(e){}");
+            //filename = filename.replace(".", "_");
+            //eval("try{SCRIPT.SINHRO_LOAD._" + filename + "(s)}catch(e){}");
 
         };
         s.setAttribute("src", src);

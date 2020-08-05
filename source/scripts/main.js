@@ -4,23 +4,14 @@
  *
  */
 
+ app = {};
+
  window.onload = function() {
 
   var browser = new detectBrowser();
-  var drawer = new canvasEngine();
-
-  SCRIPT.LOAD("scripts/system/runner.js");
-
-
-  var indicatorsBlocks = {
-
-    shema: 8,
-    draw: function(ctx) {
-      ctx.fillRect();
-    }
-  }
-  drawer.elements.push()
-
+  app.drawer = new canvasEngine(interActionController);
+  app.drawer.draw();
+  SCRIPT.LOAD("scripts/controls/main-function-menu.js");
 
  }
 
