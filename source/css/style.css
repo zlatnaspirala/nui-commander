@@ -1,0 +1,56 @@
+
+#content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index:0;
+}
+
+#canvas-source {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+#canvas-blended {
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+}
+
+.motion-cam {
+    font-family: 'Open Sans', sans-serif;
+    position: absolute;
+    font-size: 16px;
+    color: #7C7C7C;
+    bottom: 24%;
+    opacity: 0.2;
+    width: 28%;
+    white-space: nowrap;
+}
+
+#xylo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    width: 100%;
+}
+
+.note {
+    width: 12.5%;
+    float: left;
+    background: url('../images/note1.png') no-repeat;
+    position: relative;
+    z-index: 10;
+    opacity: 0.25;
+}
+
+.gui-func-field {
+  background-color: black;
+  height: 100px;
+  text-align: center;
+}
