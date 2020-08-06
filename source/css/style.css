@@ -1,4 +1,9 @@
 
+body {
+  background-color: black;
+  color: lime;
+}
+
 #content {
     position: absolute;
     left: 0;
@@ -7,6 +12,8 @@
     bottom: 0;
     overflow: hidden;
     z-index:0;
+    background-color: black;
+    color: lime;
 }
 
 #canvas-source {
@@ -43,7 +50,6 @@
 .note {
     width: 12.5%;
     float: left;
-    background: url('../images/note1.png') no-repeat;
     position: relative;
     z-index: 10;
     opacity: 0.25;
@@ -53,4 +59,6 @@
   background-color: black;
   height: 100px;
   text-align: center;
+  box-shadow: 0px 0px 2px 2px #118888;
+  opacity: 0.25;
 }

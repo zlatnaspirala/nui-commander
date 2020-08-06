@@ -3,6 +3,8 @@ function canvasEngine(interActionController) {
 
   var root = this;
 
+  root.interActionController = interActionController;
+
   // create dom element
   this.canvasDom = document.createElement("canvas");
   this.canvasDom.setAttribute("id", "drawer");
@@ -35,7 +37,9 @@ function canvasEngine(interActionController) {
 
     this.elements.forEach(function(element) {
       element.draw(root);
+      element.update();
     });
+
 
     setTimeout(function() {
       root.draw();
@@ -305,9 +309,12 @@ function canvasEngine(interActionController) {
           root.notes[r].visual.style.opacity = 1;
         }
 
-        if ( typeof interActionController.main["F" + r] !== 'undefined' &&
-        typeof interActionController.main["F" + r].action !== 'undefined') {
-          interActionController.main["F" + r].action();
+        if ( typeof interActionController.main[r] !== 'undefined' &&
+             typeof interActionController.main[r].action !== 'undefined'
+            ) {
+
+          interActionController.main[r].action();
+
         }
 
 
