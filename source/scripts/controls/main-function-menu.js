@@ -18,14 +18,14 @@
     ],
 
     text: [
-      "CLEAR", "VOLUME", "PAUSE", "F4", "F5", "F6", "F7", "ADD SOMETHING",
-      "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+      "HOME", "free", "free", "free", "free", "free", "free", "ADD SOMETHING",
+      "CONTROL 1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+      "CONTROL 2", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+      "CONTROL 3", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+      "CONTROL 4", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+      "CONTROL 5", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+      "CONTROL 6", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+      "CONTROL 7", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
     ],
 
     draw: function(engine) {
@@ -53,7 +53,7 @@
 
             engine.ctx.restore()
 
-           } else {
+          } else {
 
             engine.ctx.fillStyle = "rgba(250, 250, 100, " + this.opacity[c] + " )"
 
@@ -66,12 +66,15 @@
 
            }
 
-
+           /* Disabled
           engine.ctx.strokeRect(
             engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * j,
             engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * i,
             engine.getCanvasWidth(100) / indicatorsBlocks.shemaX,
             engine.getCanvasHeight(100) / indicatorsBlocks.shemaY);
+            */
+
+          engine.ctx.fillStyle = "black";
 
           engine.ctx.fillText(
             this.text[c],

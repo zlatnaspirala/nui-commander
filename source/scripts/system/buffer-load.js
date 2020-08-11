@@ -41,3 +41,28 @@ BufferLoader.prototype.load = function() {
   for (var i = 0; i < this.urlList.length; ++i)
   this.loadBuffer(this.urlList[i], i);
 }
+
+function modelBlock(x) {
+
+  this.index = x
+  this.status = false;
+
+  this.action = function() {
+
+    var localRoot = this;
+
+    setTimeout(function() {
+      localRoot.status = false;
+    }, 350)
+
+    if (localRoot.status == false) {
+      this.onAction();
+      this.status = true;
+    }
+
+  }
+
+  // For override
+  this.onAction = function() {}
+
+}

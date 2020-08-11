@@ -17,6 +17,14 @@ function canvasEngine(interActionController) {
 
   this.elements = [];
 
+  this.removeElementByName = function(name){
+    this.elements.forEach(function(item, index, array) {
+      if (item.name == name) {
+        array.splice(index, 1);
+      }
+    });
+  }
+
   this.getCanvasWidth = function(per) {
     if (per == 0) {
       return 0;
@@ -37,7 +45,7 @@ function canvasEngine(interActionController) {
 
     this.elements.forEach(function(element) {
       element.draw(root);
-      element.update();
+      element.update(root);
     });
 
 
@@ -48,18 +56,17 @@ function canvasEngine(interActionController) {
 
   // NUI STAFF
 
-
   var content = getDom('content');
   var video = getDom('webcam');
 
-  var blockIndicatorSize = 8;
+  this.blockIndicatorSize = 8;
 
-  for (var j = 0 ; j < blockIndicatorSize * blockIndicatorSize; j++) {
+  for (var j = 0 ; j < root.blockIndicatorSize * root.blockIndicatorSize; j++) {
     var domIndicator = document.createElement("div");
     domIndicator.setAttribute("id", "note" + j)
     domIndicator.setAttribute("class", "note")
     domIndicator.innerHTML = `
-        <div class="gui-func-field" > FUNCTION 1 </div>
+        <div class="gui-func-field" > field ` + j + ` </div>
     `;
     getDom("xylo").appendChild(domIndicator)
   }
@@ -118,8 +125,7 @@ function canvasEngine(interActionController) {
   var soundContext;
   var bufferLoader;
 
-  var notes = [];
-  this.notes = notes;
+  this.notes = [];
   // mirror video
   contextSource.translate(canvasSource.width, 0);
   contextSource.scale(-1, 1);
@@ -156,15 +162,15 @@ function canvasEngine(interActionController) {
   function finishedLoading(bufferList) {
 
 
-   for (var j = 0; j < blockIndicatorSize; j++) {
-    for (var d = 0; d < blockIndicatorSize; d++) {
-      notesPosX.push(d * root.getCanvasWidth(100) / blockIndicatorSize);
-      notesPosY.push(j * root.getCanvasHeight(100) / blockIndicatorSize);
+   for (var j = 0; j < root.blockIndicatorSize; j++) {
+    for (var d = 0; d < root.blockIndicatorSize; d++) {
+      notesPosX.push(d * root.getCanvasWidth(100) / root.blockIndicatorSize);
+      notesPosY.push(j * root.getCanvasHeight(100) / root.blockIndicatorSize);
     }
   }
 
 
-    for (var i=0; i<blockIndicatorSize * blockIndicatorSize; i++) {
+    for (var i=0; i<root.blockIndicatorSize * root.blockIndicatorSize; i++) {
       var source = soundContext.createBufferSource();
       source.buffer = bufferList[i];
       source.connect(soundContext.destination);
@@ -178,11 +184,12 @@ function canvasEngine(interActionController) {
       note.area = {
         x: notesPosX[i],
         y: notesPosY[i],
-        w: root.getCanvasWidth(100) / blockIndicatorSize,
-        h: root.getCanvasHeight(100) / blockIndicatorSize
+        w: root.getCanvasWidth(100) / root.blockIndicatorSize,
+        h: root.getCanvasHeight(100) / root.blockIndicatorSize,
+        status: true
       };
 
-      notes.push(note);
+      root.notes.push(note);
     }
 
     start();
@@ -288,7 +295,9 @@ function canvasEngine(interActionController) {
 
   this.checkAreas = function() {
     // loop over the note areas
-    for (var r=0; r< blockIndicatorSize * blockIndicatorSize; ++r) {
+    for (var r = 0;r < root.notes.length; ++r) {
+      if (root.notes[r].area.status == true) {
+
       var blendedData = contextBlended.getImageData(root.notes[r].area.x, root.notes[r].area.y, root.notes[r].area.w, root.notes[r].area.h);
       var i = 0;
       var average = 0;
@@ -309,14 +318,15 @@ function canvasEngine(interActionController) {
           root.notes[r].visual.style.opacity = 1;
         }
 
-        if ( typeof interActionController.main[r] !== 'undefined' &&
-             typeof interActionController.main[r].action !== 'undefined'
+        if ( typeof root.interActionController.main[r] !== 'undefined' &&
+             typeof root.interActionController.main[r].action !== 'undefined'
             ) {
 
-          interActionController.main[r].action();
+          root.interActionController.main[r].action();
 
-        }
 
+
+      }
 
       } else {
 
@@ -328,6 +338,9 @@ function canvasEngine(interActionController) {
 
       }
     }
+
+    }
+
   }
 
 
