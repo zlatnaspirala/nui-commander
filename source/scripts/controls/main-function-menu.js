@@ -2,10 +2,8 @@
   var indicatorsBlocks = {
 
     name: "indicatorsBlocks",
-
     shemaX: 8,
     shemaY: 8,
-
     opacity: [
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
@@ -16,7 +14,6 @@
       0, 0, 0, 0, 0, 0, 0, 0,
       0, 0, 0, 0, 0, 0, 0, 0,
     ],
-
     text: [
       "HOME", "free", "free", "free", "free", "free", "free", "ADD SOMETHING",
       "CONTROL 1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
@@ -26,6 +23,16 @@
       "CONTROL 5", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
       "CONTROL 6", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
       "CONTROL 7", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+    ],
+    icons: [
+      null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null
     ],
 
     draw: function(engine) {
@@ -66,13 +73,23 @@
 
            }
 
-           /* Disabled
-          engine.ctx.strokeRect(
+          /* Disabled
+           engine.ctx.strokeRect(
             engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * j,
             engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * i,
             engine.getCanvasWidth(100) / indicatorsBlocks.shemaX,
             engine.getCanvasHeight(100) / indicatorsBlocks.shemaY);
-            */
+          */
+
+          // draw icons
+          if (typeof this.icons[c] !== 'undefined' && this.icons[c] !== null) {
+            engine.ctx.drawImage(
+              this.icons[c],
+              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * j,
+              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * i + 10,
+              engine.getCanvasWidth(12.5),
+              engine.getCanvasHeight(12.5));
+          }
 
           engine.ctx.fillStyle = "black";
 

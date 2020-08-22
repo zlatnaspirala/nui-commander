@@ -23,6 +23,19 @@
           console.log(answer)
           app.drawer.removeElementByName("nuiButton")
         }));
+
+        /*
+        // clear it first
+        indicatorsBlocks.icons = [];
+        for (var x = 0; x < 64; x++) {
+          var commanderIconField = new Image();
+          commanderIconField.src = "images/note1.png";
+          commanderIconField.onload = function () {
+            indicatorsBlocks.icons.push(this)
+          }
+        }
+        */
+
   }, 200)
 
  }
