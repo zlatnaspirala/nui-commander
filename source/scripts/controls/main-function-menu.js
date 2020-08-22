@@ -85,10 +85,10 @@
           if (typeof this.icons[c] !== 'undefined' && this.icons[c] !== null) {
             engine.ctx.drawImage(
               this.icons[c],
-              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * j,
-              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * i + 10,
-              engine.getCanvasWidth(12.5),
-              engine.getCanvasHeight(12.5));
+              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * i,
+              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * j,
+              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX,
+              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY);
           }
 
           engine.ctx.fillStyle = "black";
