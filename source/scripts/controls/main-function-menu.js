@@ -1,4 +1,10 @@
 
+/**
+ * @description Inline code used to make easy default setup.
+ * For opacity, text, icons(images).
+ * No draws for empty string
+ */
+
   var indicatorsBlocks = {
 
     name: "indicatorsBlocks",
@@ -15,14 +21,14 @@
       0, 0, 0, 0, 0, 0, 0, 0,
     ],
     text: [
-      "HOME", "free", "free", "free", "free", "free", "free", "ADD SOMETHING",
-      "CONTROL 1", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "CONTROL 2", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "CONTROL 3", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "CONTROL 4", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "CONTROL 5", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "CONTROL 6", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
-      "CONTROL 7", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
+      "HOME", "free", "", "", "", "", "", "ADD SOMETHING",
+      "CONTROL 1", "", "", "", "", "", "", "",
+      "CONTROL 2", "", "", "", "", "", "", "",
+      "CONTROL 3", "", "", "", "", "", "", "",
+      "CONTROL 4", "", "", "", "", "", "", "",
+      "", "", "", "", "", "", "", "",
+      "", "", "", "", "", "", "", "",
+      "", "", "", "", "", "", "", "",
     ],
 
     iconsStyle: {
@@ -48,7 +54,6 @@
       for (var j = 0;j < this.shemaX; j++) {
 
         for (var i = 0;i < this.shemaY; i++) {
-
 
           if (typeof engine.interActionController.main[c] !== 'undefined' &&
               engine.interActionController.main[c].status == true) {
@@ -92,27 +97,29 @@
               engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * j + localScale,
               engine.getCanvasWidth(100) / indicatorsBlocks.shemaX - 2 * localScale,
               engine.getCanvasHeight(100) / indicatorsBlocks.shemaY - 2 * localScale);
+          } else if (this.text[c] != '') {
+
+            // For improve                          text opacity
+            engine.ctx.fillStyle = "rgba(250, 100, 100, 1)"
+
+            engine.ctx.fillRect(
+              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * j,
+              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * i ,
+              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX ,
+              engine.getCanvasHeight(2.1));
+
+            engine.ctx.fillStyle = "black";
+            engine.ctx.font = "16px arial";
+
+            engine.ctx.fillText(
+              this.text[c],
+              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * j,
+              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * i + 10,
+              engine.getCanvasWidth(12.5),
+              engine.getCanvasHeight(12.5));
           }
 
-
-          engine.ctx.fillStyle = "orange";
-          engine.ctx.fillRect(
-            engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * j,
-            engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * i ,
-            engine.getCanvasWidth(100) / indicatorsBlocks.shemaX ,
-            engine.getCanvasHeight(2.1));
-
-          engine.ctx.fillStyle = "black";
-          engine.ctx.font = "15px arial";
-
-          engine.ctx.fillText(
-            this.text[c],
-            engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * j,
-            engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * i + 10,
-            engine.getCanvasWidth(12.5),
-            engine.getCanvasHeight(12.5));
-
-            c++;
+          c++;
 
         }
       }
