@@ -230,7 +230,7 @@ function canvasEngine(interActionController) {
 
   this.update = function() {
 
-    if (root.systemOnPause) {
+    if (!root.systemOnPause) {
       root.drawVideo();
       root.blend();
       root.checkAreas();
