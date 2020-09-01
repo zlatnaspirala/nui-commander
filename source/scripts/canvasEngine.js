@@ -15,6 +15,7 @@ function canvasEngine(interActionController) {
   var content = getDom("content")
   content.appendChild(this.canvasDom);
 
+  this.systemOnPause = false;
   this.elements = [];
 
   this.removeElementByName = function(name){
@@ -228,11 +229,14 @@ function canvasEngine(interActionController) {
   })();
 
   this.update = function() {
-    root.drawVideo();
-    root.blend();
-    root.checkAreas();
-    requestAnimFrame(root.update);
-//    timeOut = setTimeout(update, 1000/60);
+
+    if (root.systemOnPause) {
+      root.drawVideo();
+      root.blend();
+      root.checkAreas();
+      requestAnimFrame(root.update);
+    }
+
   }
 
   this.drawVideo = function() {

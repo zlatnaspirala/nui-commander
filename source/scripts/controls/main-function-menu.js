@@ -24,6 +24,10 @@
       "CONTROL 6", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
       "CONTROL 7", "F2", "F3", "F4", "F5", "F6", "F7", "F8",
     ],
+
+    iconsStyle: {
+      localScale: 0
+    },
     icons: [
       null, null, null, null, null, null, null, null,
       null, null, null, null, null, null, null, null,
@@ -39,6 +43,8 @@
 
       var c = 0;
 
+      engine.ctx.save()
+
       for (var j = 0;j < this.shemaX; j++) {
 
         for (var i = 0;i < this.shemaY; i++) {
@@ -46,8 +52,6 @@
 
           if (typeof engine.interActionController.main[c] !== 'undefined' &&
               engine.interActionController.main[c].status == true) {
-
-            engine.ctx.save()
 
             this.opacity[c] = this.opacity[c] + 0.02
             engine.ctx.fillStyle = "rgba(250, 250, 100, " + this.opacity[c] + " )"
@@ -57,8 +61,6 @@
             engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * j,
             engine.getCanvasWidth(100) / indicatorsBlocks.shemaX,
             engine.getCanvasHeight(100) / indicatorsBlocks.shemaY);
-
-            engine.ctx.restore()
 
           } else {
 
@@ -81,17 +83,27 @@
             engine.getCanvasHeight(100) / indicatorsBlocks.shemaY);
           */
 
+          var localScale = this.iconsStyle.localScale;
           // draw icons
           if (typeof this.icons[c] !== 'undefined' && this.icons[c] !== null) {
             engine.ctx.drawImage(
               this.icons[c],
-              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * i,
-              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * j,
-              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX,
-              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY);
+              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * i + localScale,
+              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * j + localScale,
+              engine.getCanvasWidth(100) / indicatorsBlocks.shemaX - 2 * localScale,
+              engine.getCanvasHeight(100) / indicatorsBlocks.shemaY - 2 * localScale);
           }
 
+
+          engine.ctx.fillStyle = "orange";
+          engine.ctx.fillRect(
+            engine.getCanvasWidth(100) / indicatorsBlocks.shemaX * j,
+            engine.getCanvasHeight(100) / indicatorsBlocks.shemaY * i ,
+            engine.getCanvasWidth(100) / indicatorsBlocks.shemaX ,
+            engine.getCanvasHeight(2.1));
+
           engine.ctx.fillStyle = "black";
+          engine.ctx.font = "15px arial";
 
           engine.ctx.fillText(
             this.text[c],
@@ -100,11 +112,12 @@
             engine.getCanvasWidth(12.5),
             engine.getCanvasHeight(12.5));
 
-
             c++;
 
         }
       }
+
+      engine.ctx.restore()
 
       },
 
