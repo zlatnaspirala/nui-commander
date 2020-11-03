@@ -5,19 +5,24 @@
 # nui-commander #
  I will use motion detect on video stream to create and control UI Menu system with progress bar control, actions-events, popup or creating dom element or canvas staff.  Interface must be drawn on video tag in `AR` manner. Point is to create total manipulation only with your hands in the air.
 
+### From project demo example:
+
+![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/screenshot.jpg)
+
+### Nui-commander used like submodules in
+### https://github.com/zlatnaspirala/vue-typescript-starter
+
 ![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/screenshot.jpg)
 
  DOM elements are on whole document size and indicate at the moment .
  On canvas indicator table blocks canvas object will accumulate movement action and after some little period on
- idle it ill fall to the opacity `0`.
+ idle it ill fall to the opacity `0`. This is just example of usage!
 
-### TO DO => ###
+### FEATURE DONE LIST
+#### Individual command
+#### Message Box NUI with two button options yes or no
 
-    - Test performance for minimum 5 uniq project detect motions library.
-    - Choose the one how puts less strain on the CPU.
-
-
- ### Structure: ###
+### Structure:
 
    - web instance [priory]
        - must work on chrome , opera , safari , firefox and all mobile version.
