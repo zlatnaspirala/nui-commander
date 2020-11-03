@@ -12,7 +12,7 @@
 ### Nui-commander used like submodules in
 ### https://github.com/zlatnaspirala/vue-typescript-starter
 
-![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/screenshot.jpg)
+![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/nui-commander-vuletube.png)
 
  DOM elements are on whole document size and indicate at the moment .
  On canvas indicator table blocks canvas object will accumulate movement action and after some little period on
