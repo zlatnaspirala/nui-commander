@@ -51,6 +51,15 @@
 
       console.info("nui-commander controls attached.")
 
+      indicatorsBlocks.icons = [];
+        for (var x = 0; x < 64; x++) {
+          var commanderIconField = new Image();
+          commanderIconField.src = "images/note1.png";
+          commanderIconField.onload = function () {
+            indicatorsBlocks.icons.push(this)
+          }
+        }
+
         /*
         // clear it first
         indicatorsBlocks.icons = [];

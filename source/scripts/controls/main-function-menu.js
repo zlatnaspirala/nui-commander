@@ -5,7 +5,7 @@
  * No draws for empty string
  */
 
-  var indicatorsBlocks = {
+  window.indicatorsBlocks = {
 
     name: "indicatorsBlocks",
     shemaX: 8,

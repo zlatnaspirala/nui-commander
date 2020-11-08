@@ -1,7 +1,6 @@
 
 ## [WIP] ##
 
-
 # nui-commander #
  Motion detect on video stream is used to create and control UI Menu system with basic GUI controls, actions-events, popup or creating dom element or canvas staff.
  Interface must be drawn on video tag in `AR` manner.
@@ -10,9 +9,7 @@
 
 ![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/screenshot.jpg)
 
- DOM elements are on whole document size and indicate at the moment .
- On canvas indicator table blocks canvas object will accumulate movement action and after some little period on
- idle it ill fall to the opacity `0`. This is just example of usage!
+On canvas indicator table blocks canvas object will accumulate movement action and after some little period on idle it ill fall to the opacity `0`. This is just example of usage!
 
 ### FEATURE DONE LIST
 
@@ -32,7 +29,6 @@ app.drawer.elements.push(
     if (answer == "yes") {
 
       console.log("Good answer is yes.")
-
       setTimeout( () => {
         app.drawer.elements.push(
         new window.nuiMsgBox(
@@ -54,6 +50,11 @@ app.drawer.elements.push(
 
 ```
 
+#### Adding Blocks parialt background
+![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/images.jpg)
+
+
+
 ### Objective:
 
    - web instance [priory]
@@ -63,7 +64,7 @@ app.drawer.elements.push(
        - must have a excellent input output logic to be reusable in many ways.
 
 
-### nui-commander user in:
+### nui-commander user in vuletube:
 
 ![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/nui-commander-vuletube.png)
 #### Nui-commander used like submodules in
@@ -72,7 +73,5 @@ app.drawer.elements.push(
 
 ### LICENCE:
 
-  Based on project:
-  https://github.com/soundstep/magic-xylophone
-  MIT
-
+#### Based on project:
+#### https://github.com/soundstep/magic-xylophone MIT
