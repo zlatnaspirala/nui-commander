@@ -8,7 +8,7 @@
  Objective is to create total manipulation only with your hands in the air.
 
 
-![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/nui-commander-vuletube.png)
+![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/screenshot.jpg)
 
  DOM elements are on whole document size and indicate at the moment .
  On canvas indicator table blocks canvas object will accumulate movement action and after some little period on
@@ -20,6 +20,39 @@
 
 #### Message Box NUI with two button options yes or no
 
+```js
+app.drawer.elements.push(
+  new window.nuiMsgBox(
+  "Do you love this project?",
+  function (answer) {
+
+    console.log(answer)
+    app.drawer.removeElementByName("nuiMsgBox")
+
+    if (answer == "yes") {
+
+      console.log("Good answer is yes.")
+
+      setTimeout( () => {
+        app.drawer.elements.push(
+        new window.nuiMsgBox(
+          "Do you wanna to activate voice commander?",
+          function (answer) {
+            app.drawer.removeElementByName("nuiMsgBox")
+            if (answer == "yes") {
+              // root.vc.run()
+              alert('ok')
+            }
+          }))
+      }, 800)
+
+    } else {
+      console.log("Ok good buy.")
+      window.location.href = "https://google.com"
+    }
+}))
+
+```
 
 ### Objective:
 
@@ -32,10 +65,9 @@
 
 ### nui-commander user in:
 
-![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/screenshot.jpg)
-
-### Nui-commander used like submodules in
-### https://github.com/zlatnaspirala/vue-typescript-starter
+![screenshot](https://github.com/zlatnaspirala/nui-commander/blob/master/nui-commander-vuletube.png)
+#### Nui-commander used like submodules in
+#### https://github.com/zlatnaspirala/vue-typescript-starter
 
 
 ### LICENCE:
