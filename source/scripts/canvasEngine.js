@@ -1,5 +1,12 @@
 
-function canvasEngine(interActionController) {
+function canvasEngine(interActionController, options) {
+
+  if (typeof options === 'undefined') {
+    options = {
+      domVisual: false
+    }
+    this.options = options;
+  }
 
   var root = this;
 
@@ -12,13 +19,13 @@ function canvasEngine(interActionController) {
   this.canvasDom.setAttribute("height", "480px");
   this.canvasDom.setAttribute("style", "position: absolute;z-index:20;left: 0; top: 0;");
   this.ctx = this.canvasDom.getContext("2d");
-  var content = getDom("content")
+  var content = getDom("nui-commander-container")
   content.appendChild(this.canvasDom);
 
   this.systemOnPause = false;
   this.elements = [];
 
-  this.removeElementByName = function(name){
+  this.removeElementByName = function(name) {
     this.elements.forEach(function(item, index, array) {
       if (item.name == name) {
         array.splice(index, 1);
@@ -57,19 +64,23 @@ function canvasEngine(interActionController) {
 
   // NUI STAFF
 
-  var content = getDom('content');
+  var content = getDom("nui-commander-container");
   var video = getDom('webcam');
 
   this.blockIndicatorSize = 8;
 
-  for (var j = 0 ; j < root.blockIndicatorSize * root.blockIndicatorSize; j++) {
-    var domIndicator = document.createElement("div");
-    domIndicator.setAttribute("id", "note" + j)
-    domIndicator.setAttribute("class", "note")
-    domIndicator.innerHTML = `
-        <div class="gui-func-field" > field ` + j + ` </div>
-    `;
-    getDom("xylo").appendChild(domIndicator)
+  if (root.options.domVisual == true) {
+
+    for (var j = 0 ; j < root.blockIndicatorSize * root.blockIndicatorSize; j++) {
+      var domIndicator = document.createElement("div");
+      domIndicator.setAttribute("id", "note" + j)
+      domIndicator.setAttribute("class", "note")
+      domIndicator.innerHTML = `
+          <div class="gui-func-field" > field ` + j + ` </div>
+      `;
+      getDom("xylo").appendChild(domIndicator)
+    }
+
   }
 
   var notesPosY = [];
@@ -162,25 +173,33 @@ function canvasEngine(interActionController) {
 
   function finishedLoading(bufferList) {
 
-
-   for (var j = 0; j < root.blockIndicatorSize; j++) {
-    for (var d = 0; d < root.blockIndicatorSize; d++) {
-      notesPosX.push(d * root.getCanvasWidth(100) / root.blockIndicatorSize);
-      notesPosY.push(j * root.getCanvasHeight(100) / root.blockIndicatorSize);
+    for (var j = 0; j < root.blockIndicatorSize; j++) {
+      for (var d = 0; d < root.blockIndicatorSize; d++) {
+        notesPosX.push(d * root.getCanvasWidth(100) / root.blockIndicatorSize);
+        notesPosY.push(j * root.getCanvasHeight(100) / root.blockIndicatorSize);
+      }
     }
-  }
-
 
     for (var i=0; i<root.blockIndicatorSize * root.blockIndicatorSize; i++) {
       var source = soundContext.createBufferSource();
       source.buffer = bufferList[i];
       source.connect(soundContext.destination);
 
-      var note = {
-        note: source,
-        ready: true,
-        visual: getDom("note" + i)
-      };
+      var note = null;
+      if (root.options.domVisual == true) {
+        note = {
+          note: source,
+          ready: true,
+          visual: getDom("note" + i)
+        };
+      } else {
+        note = {
+          note: source,
+          ready: true,
+          visual: false
+        };
+      }
+
 
       note.area = {
         x: notesPosX[i],
@@ -193,7 +212,12 @@ function canvasEngine(interActionController) {
       root.notes.push(note);
     }
 
+    if (root.options.domVisual == false) {
+      root.checkAreas = root.checkAreasOverride1;
+    }
+
     start();
+
   }
 
   function playSound(obj) {
@@ -302,50 +326,77 @@ function canvasEngine(interActionController) {
     for (var r = 0;r < root.notes.length; ++r) {
       if (root.notes[r].area.status == true) {
 
-      var blendedData = contextBlended.getImageData(root.notes[r].area.x, root.notes[r].area.y, root.notes[r].area.w, root.notes[r].area.h);
-      var i = 0;
-      var average = 0;
-      // loop over the pixels
-      while (i < (blendedData.data.length * 0.25)) {
-        // make an average between the color channel
-        average += (blendedData.data[i*4] + blendedData.data[i*4+1] + blendedData.data[i*4+2]) / 3;
-        ++i;
-      }
-      // calculate an average between of the color values of the note area
-      average = Math.round(average / (blendedData.data.length * 0.25));
-
-      if (average > 10) {
-        // over a small limit, consider that a movement is detected
-        // play a note and show a visual feedback to the user
-        playSound(root.notes[r]);
-        if(root.notes[r].visual) {
-          root.notes[r].visual.style.opacity = 1;
+        var blendedData = contextBlended.getImageData(root.notes[r].area.x, root.notes[r].area.y, root.notes[r].area.w, root.notes[r].area.h);
+        var i = 0;
+        var average = 0;
+        // loop over the pixels
+        while (i < (blendedData.data.length * 0.25)) {
+          // make an average between the color channel
+          average += (blendedData.data[i*4] + blendedData.data[i*4+1] + blendedData.data[i*4+2]) / 3;
+          ++i;
         }
+        // calculate an average between of the color values of the note area
+        average = Math.round(average / (blendedData.data.length * 0.25));
 
-        if ( typeof root.interActionController.main[r] !== 'undefined' &&
-             typeof root.interActionController.main[r].action !== 'undefined'
-            ) {
+        if (average > 10) {
+          // over a small limit, consider that a movement is detected
+          // play a note and show a visual feedback to the user
+          playSound(root.notes[r]);
 
-          root.interActionController.main[r].action();
+          if(root.notes[r].visual) {
+            root.notes[r].visual.style.opacity = 1;
+          }
 
+          if ( typeof root.interActionController.main[r] !== 'undefined' &&
+              typeof root.interActionController.main[r].action !== 'undefined') {
+            root.interActionController.main[r].action();
+          }
 
-
-      }
-
-      } else {
-
-        if (root.notes[r].visual.style.opacity <= 0) {
-          root.notes[r].visual.style.opacity = 0;
         } else {
-          root.notes[r].visual.style.opacity -= 0.1;
-        }
 
+          if (root.notes[r].visual.style.opacity <= 0) {
+            root.notes[r].visual.style.opacity = 0;
+          } else {
+            root.notes[r].visual.style.opacity -= 0.1;
+          }
+
+        }
       }
-    }
 
     }
 
   }
 
+  this.checkAreasOverride1 = function() {
+    for (var r = 0;r < root.notes.length; ++r) {
+      if (root.notes[r].area.status == true) {
+        var blendedData = contextBlended.getImageData(root.notes[r].area.x, root.notes[r].area.y, root.notes[r].area.w, root.notes[r].area.h);
+        var i = 0;
+        var average = 0;
+        while (i < (blendedData.data.length * 0.25)) {
+          average += (blendedData.data[i*4] + blendedData.data[i*4+1] + blendedData.data[i*4+2]) / 3;
+          ++i;
+        }
+        average = Math.round(average / (blendedData.data.length * 0.25));
+        if (average > 10) {
+          playSound(root.notes[r]);
+          if ( typeof root.interActionController.main[r] !== 'undefined' &&
+              typeof root.interActionController.main[r].action !== 'undefined') {
+            root.interActionController.main[r].action();
+          }
+        } else {
+          /*
+          if (root.notes[r].visual.style.opacity <= 0) {
+            root.notes[r].visual.style.opacity = 0;
+          } else {
+            root.notes[r].visual.style.opacity -= 0.1;
+          }
+          */
+        }
+      }
+
+    }
+
+  }
 
 }
