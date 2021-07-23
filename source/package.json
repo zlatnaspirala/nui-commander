@@ -1,7 +1,7 @@
 {
   "name": "nui-commander",
   "short-name": "nui-commander",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Base version BETA TEST, Give command based on block detect webcam samples.",
   "main": "index.js",
   "scripts": {
