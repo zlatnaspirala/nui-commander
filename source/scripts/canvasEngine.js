@@ -1,5 +1,8 @@
 
-function canvasEngine(interActionController, options) {
+import { BufferLoader } from "./system/buffer-load";
+import { getDom } from "./helper";
+
+export function canvasEngine(interActionController, options) {
 
   if (typeof options === 'undefined') {
     options = {

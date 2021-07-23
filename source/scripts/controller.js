@@ -1,5 +1,7 @@
 
-var interActionController = {
+import { modelBlock } from "./system/buffer-load"
+
+export var interActionController = {
   main: []
 }
 

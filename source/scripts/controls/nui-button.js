@@ -1,5 +1,5 @@
 
-function nuiButton(textMsg, callback) {
+export function nuiButton(textMsg, callback) {
 
   this.name = "nuiBotton";
   this.sensitivity = "mid";
@@ -91,4 +91,4 @@ function nuiButton(textMsg, callback) {
 
   };
 
-  }
+}

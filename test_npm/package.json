@@ -1,0 +1,21 @@
+{
+  "name": "test-nui-commander",
+  "version": "1.0.0",
+  "description": "test nui commander",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nui-commander"
+  ],
+  "author": "Nikola Lukic",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "nui-commander": "0.0.3",
+    "esmify": "^2.1.1"
+  },
+  "devDependencies": {
+    "browser-resolve": "^2.0.0"
+  }
+}

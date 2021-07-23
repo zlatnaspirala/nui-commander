@@ -1,0 +1,36 @@
+{
+  "name": "nui-commander",
+  "short-name": "nui-commander",
+  "version": "0.0.3",
+  "description": "Base version BETA TEST, Give command based on block detect webcam samples.",
+  "main": "index.js",
+  "scripts": {
+    "build.lib": "browserify index.js -p esmify > nui-commander.js",
+    "test": "browserify main.js -p esmify > build/nui-commander.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zlatnaspirala/voice-commander.git"
+  },
+  "keywords": [
+    "low-cpu",
+    "nui-detect",
+    "js",
+    "nui-commander",
+    "commander",
+    "javascript",
+    "ECMA6"
+  ],
+  "author": "Nikola Lukic zlatnaspirala@gmail.com",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/zlatnaspirala/voice-commander/issues"
+  },
+  "homepage": "https://github.com/zlatnaspirala/voice-commander#readme",
+  "dependencies": {
+    "esmify": "^2.1.1"
+  },
+  "devDependencies": {
+    "browser-resolve": "^2.0.0"
+  }
+}

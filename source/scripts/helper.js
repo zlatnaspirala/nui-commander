@@ -1,5 +1,5 @@
 
-function detectBrowser() {
+export function DetectBrowser() {
 
   var HREFF,
       HREFTXT = "unknown";
@@ -151,32 +151,25 @@ function detectBrowser() {
   this.NOMOBILE = NOMOBILE;
 }
 
-function getDom(id) {
+export function getDom(id) {
   return document.getElementById(id)
 }
 
-var SCRIPT = {
+export var SCRIPT = {
   SCRIPT_ID: 0,
   SINHRO_LOAD: {},
   LOAD: function addScript(src) {
       var s = document.createElement("script");
       s.onload = function() {
-
           SCRIPT.SCRIPT_ID++;
           console.log("Script id loaded : " + SCRIPT.SCRIPT_ID + " with src : " + this.src);
-
-          //var filename = this.src.substring(this.src.lastIndexOf("/") + 1, this.src.lastIndexOf("."));
-          //console.log(filename)
-          //filename = filename.replace(".", "_");
-          //eval("try{SCRIPT.SINHRO_LOAD._" + filename + "(s)}catch(e){}");
-
       };
       s.setAttribute("src", src);
       document.body.appendChild(s);
   }
 };
 
-function asyncLoad(path, callback) {
+export function asyncLoad(path, callback) {
 
   if (typeof callback === "undefined") {
     callback = function () { };

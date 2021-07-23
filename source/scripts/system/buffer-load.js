@@ -1,4 +1,4 @@
-function BufferLoader(context, urlList, callback) {
+export function BufferLoader(context, urlList, callback) {
   this.context = context;
   this.urlList = urlList;
   this.onload = callback;
@@ -42,7 +42,7 @@ BufferLoader.prototype.load = function() {
   this.loadBuffer(this.urlList[i], i);
 }
 
-function modelBlock(x) {
+export function modelBlock(x) {
 
   this.index = x
   this.status = false;

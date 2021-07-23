@@ -1,5 +1,5 @@
 
-function nuiMsgBox(textMsg, callback) {
+export function nuiMsgBox(textMsg, callback) {
 
   this.name = "nuiMsgBox";
   this.sensitivity = "mid";
@@ -98,4 +98,4 @@ function nuiMsgBox(textMsg, callback) {
 
   };
 
-  }
+}
