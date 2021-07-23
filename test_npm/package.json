@@ -4,7 +4,7 @@
   "description": "test nui commander",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "browserify myNuiApp.js -p esmify > build/myNuiApp.js"
   },
   "keywords": [
     "nui-commander"
@@ -12,7 +12,7 @@
   "author": "Nikola Lukic",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "nui-commander": "0.0.3",
+    "nui-commander": "0.0.5",
     "esmify": "^2.1.1"
   },
   "devDependencies": {

@@ -10,5 +10,5 @@ export {
   canvasEngine,
   interActionController,
   nuiMsgBox,
-  DetectBrowser,
+  DetectBrowser
 }
