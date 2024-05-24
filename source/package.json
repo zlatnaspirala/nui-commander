@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "build.lib": "browserify index.js -p esmify > nui-commander.js",
-    "test": "browserify main.js -p esmify > build/nui-commander.js"
+    "test": "browserify main.js -p esmify > build/nui-commander.js",
+    "start": "http-server ./public/ -p 3000"
   },
   "repository": {
     "type": "git",
