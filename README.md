@@ -36,29 +36,29 @@ On canvas indicator table blocks canvas object will accumulate movement action a
 ```js
   import {
     indicatorsBlocks,
-    canvasEngine,
+    CanvasEngine,
     interActionController,
-    nuiMsgBox } from "nui-commander";
+    NuiMsgBox } from "nui-commander";
 
   var nuiCommander = {};
-  nuiCommander.drawer = new canvasEngine( interActionController );
+  nuiCommander.drawer = new CanvasEngine( interActionController );
   nuiCommander.drawer.draw();
 
   nuiCommander.indicatorsBlocks = indicatorsBlocks;
   nuiCommander.drawer.elements.push( nuiCommander.indicatorsBlocks );
 
   nuiCommander.drawer.elements.push(
-    new nuiMsgBox( "Do you love this project?", function ( answer ) {
+    new NuiMsgBox( "Do you love this project?", function ( answer ) {
       console.log( answer );
-      nuiCommander.drawer.removeElementByName( "nuiMsgBox" );
+      nuiCommander.drawer.removeElementByName( "NuiMsgBox" );
       if (answer == "yes") {
         console.log( "Good answer is yes." );
         setTimeout( () => {
           nuiCommander.drawer.elements.push(
-            new nuiMsgBox(
+            new NuiMsgBox(
               "Do you wanna to activate some commander options?",
               function (answer) {
-                nuiCommander.drawer.removeElementByName( "nuiMsgBox" );
+                nuiCommander.drawer.removeElementByName( "NuiMsgBox" );
                 if (answer == "yes") {
                   alert("ok , interest idea.");
                 }

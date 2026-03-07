@@ -1,8 +1,8 @@
 {
   "name": "nui-commander",
   "short-name": "nui-commander",
-  "version": "0.0.6",
-  "description": "Base version BETA TEST, Give command based on block detect webcam samples.",
+  "version": "1.0.0",
+  "description": "Give command with hands low cpu usage based on block detect webcam samples. Top performance js code.",
   "main": "index.js",
   "scripts": {
     "build.lib": "browserify index.js -p esmify > nui-commander.js",
@@ -14,6 +14,11 @@
     "url": "git+https://github.com/zlatnaspirala/voice-commander.git"
   },
   "keywords": [
+    "low-cpu-usage",
+    "Natural-User-Interface",
+    "NUI",
+    "control-hand",
+    "no-cost",
     "low-cpu",
     "nui-detect",
     "js",
