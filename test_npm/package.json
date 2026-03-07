@@ -12,7 +12,7 @@
   "author": "Nikola Lukic",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "nui-commander": "0.0.5",
+    "nui-commander": "1.0.0",
     "esmify": "^2.1.1"
   },
   "devDependencies": {
