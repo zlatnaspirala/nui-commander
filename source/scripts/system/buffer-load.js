@@ -11,35 +11,25 @@ BufferLoader.prototype.loadBuffer = function(url, index) {
   var request = new XMLHttpRequest();
   request.open("GET", url, true);
   request.responseType = "arraybuffer";
-
   var loader = this;
-
   request.onload = function() {
     // Asynchronously decode the audio file data in request.response
-    loader.context.decodeAudioData(
-      request.response,
+    loader.context.decodeAudioData(request.response,
       function(buffer) {
-        if (!buffer) {
-          alert('error decoding file data: ' + url);
-          return;
-        }
+        if(!buffer) {console.log('error decoding file data: ' + url); return;}
         loader.bufferList[index] = buffer;
-        if (++loader.loadCount == loader.urlList.length)
+        if(++loader.loadCount == loader.urlList.length)
           loader.onload(loader.bufferList);
       }
-    );
+    )
   }
-
-  request.onerror = function() {
-    alert('BufferLoader: XHR error');
-  }
-
+  request.onerror = function() {console.warn('BufferLoader: XHR error')}
   request.send();
 }
 
 BufferLoader.prototype.load = function() {
-  for (var i = 0; i < this.urlList.length; ++i)
-  this.loadBuffer(this.urlList[i], i);
+  for(var i = 0;i < this.urlList.length;++i)
+    this.loadBuffer(this.urlList[i], i);
 }
 
 export function modelBlock(x) {
@@ -55,7 +45,7 @@ export function modelBlock(x) {
       localRoot.status = false;
     }, 350)
 
-    if (localRoot.status == false) {
+    if(localRoot.status == false) {
       this.onAction();
       this.status = true;
     }
