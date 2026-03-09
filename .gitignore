@@ -1,3 +1,4 @@
 
 source/node_modules/
 test_npm/node_modules/
+source/package-lock.json

@@ -10,10 +10,10 @@ Object.defineProperty(exports, "indicatorsBlocks", {
     return _mainFunctionMenu.indicatorsBlocks;
   }
 });
-Object.defineProperty(exports, "canvasEngine", {
+Object.defineProperty(exports, "CanvasEngine", {
   enumerable: true,
   get: function () {
-    return _canvasEngine.canvasEngine;
+    return _canvasEngine.CanvasEngine;
   }
 });
 Object.defineProperty(exports, "DetectBrowser", {
@@ -28,10 +28,10 @@ Object.defineProperty(exports, "interActionController", {
     return _controller.interActionController;
   }
 });
-Object.defineProperty(exports, "nuiMsgBox", {
+Object.defineProperty(exports, "NuiMsgBox", {
   enumerable: true,
   get: function () {
-    return _nuiMsgBox.nuiMsgBox;
+    return _nuiMsgBox.NuiMsgBox;
   }
 });
 
@@ -45,19 +45,19 @@ var _controller = require("./scripts/controller");
 
 var _nuiMsgBox = require("./scripts/controls/nui-msg-box");
 
-},{"./scripts/canvasEngine":2,"./scripts/controller":3,"./scripts/controls/main-function-menu":4,"./scripts/controls/nui-msg-box":5,"./scripts/helper":6}],2:[function(require,module,exports){
+},{"./scripts/CanvasEngine":2,"./scripts/controller":3,"./scripts/controls/main-function-menu":4,"./scripts/controls/nui-msg-box":5,"./scripts/helper":6}],2:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.canvasEngine = canvasEngine;
+exports.CanvasEngine = CanvasEngine;
 
 var _bufferLoad = require("./system/buffer-load");
 
 var _helper = require("./helper");
 
-function canvasEngine(interActionController, options) {
+function CanvasEngine(interActionController, options) {
   if (typeof options === 'undefined') {
     options = {
       domVisual: false
@@ -523,10 +523,10 @@ exports.indicatorsBlocks = indicatorsBlocks;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.nuiMsgBox = nuiMsgBox;
+exports.NuiMsgBox = NuiMsgBox;
 
-function nuiMsgBox(textMsg, callback) {
-  this.name = "nuiMsgBox";
+function NuiMsgBox(textMsg, callback) {
+  this.name = "NuiMsgBox";
   this.sensitivity = "mid";
   this.callback = callback;
   this.shemaX = 8;

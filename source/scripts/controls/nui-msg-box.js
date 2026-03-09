@@ -1,101 +1,68 @@
+export class NuiMsgBox {
 
-export function nuiMsgBox(textMsg, callback) {
+  constructor(textMsg, callback) {
+    this.name        = "NuiMsgBox";
+    this.sensitivity = "mid";
+    this.callback    = callback;
+    this.shemaX      = 8;
+    this.shemaY      = 8;
+    this.yesText     = "YES";
+    this.noText      = "NO";
+    this.messageText = textMsg;
+    this.myOpacity   = 0.3;
+  }
 
-  this.name = "nuiMsgBox";
-  this.sensitivity = "mid";
-  this.callback = callback;
-  this.shemaX = 8;
-  this.shemaY = 8;
-  this.yesText = "YES";
-  this.noText = "NO";
-  this.messageText = textMsg;
-  this.myOpacity = 0.3;
+  draw(engine) {
+    const { ctx } = engine;
+    const w = (col) => engine.getCanvasWidth(100)  / this.shemaX * col;
+    const h = (row) => engine.getCanvasHeight(100) / this.shemaY * row;
 
-  this.draw = function(engine) {
+    ctx.save();
+    ctx.font = "30px sans-serif";
 
-    engine.ctx.save()
+    // ── Message box background ──────────────────────────────────────────────
+    ctx.fillStyle = `rgba(10, 150, 110, ${this.myOpacity})`;
+    ctx.fillRect(w(1), h(1), w(6), h(2));
 
-    engine.ctx.fillStyle = "rgba(10, 150, 110, " + this.myOpacity + " )"
+    ctx.fillStyle = "black";
+    ctx.fillText(this.messageText, w(2), h(1.5), engine.getCanvasWidth(35), engine.getCanvasHeight(9));
 
-    engine.ctx.fillRect(
-    engine.getCanvasWidth(100) / this.shemaX * 1,
-    engine.getCanvasHeight(100) / this.shemaY * 1,
-    engine.getCanvasWidth(100) / this.shemaX * 6,
-    engine.getCanvasHeight(100) / this.shemaY * 2);
+    // ── YES button ──────────────────────────────────────────────────────────
+    ctx.fillStyle = `rgba(210, 50, 110, ${this.myOpacity})`;
+    ctx.fillRect(w(1), h(2), w(3), h(1));
 
-    engine.ctx.fillStyle = "black";
-    engine.ctx.font = "30px sans-serif";
+    ctx.fillStyle = "white";
+    ctx.fillText(this.yesText, w(2), h(2.7), engine.getCanvasWidth(15), engine.getCanvasHeight(9));
 
-    engine.ctx.fillText(
-      this.messageText,
-      engine.getCanvasWidth(100) / this.shemaX * 2,
-      engine.getCanvasHeight(100) / this.shemaY * 1.5,
-      engine.getCanvasWidth(35),
-      engine.getCanvasHeight(9));
+    // ── NO button ───────────────────────────────────────────────────────────
+    ctx.fillStyle = `rgba(210, 90, 110, ${this.myOpacity})`;
+    ctx.fillRect(w(4), h(2), w(3), h(1));
 
+    ctx.fillStyle = "black";
+    ctx.fillText(this.noText, w(5.1), h(2.7), engine.getCanvasWidth(35), engine.getCanvasHeight(9));
 
-    engine.ctx.fillStyle = "rgba(210, 50, 110, " + this.myOpacity + " )"
+    ctx.restore();
+  }
 
-    engine.ctx.fillRect(
-      engine.getCanvasWidth(100) / this.shemaX * 1,
-      engine.getCanvasHeight(100) / this.shemaY * 2,
-      engine.getCanvasWidth(100) / this.shemaX * 3,
-      engine.getCanvasHeight(100) / this.shemaY * 1);
+  update(engine) {
+    if (this.sensitivity !== "mid") return;
 
-    engine.ctx.fillStyle = "white";
+    const zone = (i) => engine.interActionController.main[i].status;
 
-    engine.ctx.fillText(
-      this.yesText,
-      engine.getCanvasWidth(100) / this.shemaX * 2,
-      engine.getCanvasHeight(100) / this.shemaY * 2.7,
-      engine.getCanvasWidth(15),
-      engine.getCanvasHeight(9));
+    const yes = [zone(17), zone(18), zone(19)];
+    const no  = [zone(20), zone(21), zone(22)];
 
-    engine.ctx.fillStyle = "rgba(210, 90, 110, " + this.myOpacity + " )"
+    const adjacentPair = ([a, b, c]) => (a && b) || (b && c);
 
-    engine.ctx.fillRect(
-      engine.getCanvasWidth(100) / this.shemaX * 4,
-      engine.getCanvasHeight(100) / this.shemaY * 2,
-      engine.getCanvasWidth(100) / this.shemaX * 3,
-      engine.getCanvasHeight(100) / this.shemaY * 1);
-
-    engine.ctx.fillStyle = "black";
-
-    engine.ctx.fillText(
-      this.noText,
-      engine.getCanvasWidth(100) / this.shemaX * 5.1,
-      engine.getCanvasHeight(100) / this.shemaY * 2.7,
-      engine.getCanvasWidth(35),
-      engine.getCanvasHeight(9));
-
-    engine.ctx.restore();
-
-  };
-
-  this.update = function(engine) {
-
-    var y1 = engine.interActionController.main[17].status
-    var y2 = engine.interActionController.main[18].status
-    var y3 = engine.interActionController.main[19].status
-
-    var n1 = engine.interActionController.main[20].status
-    var n2 = engine.interActionController.main[21].status
-    var n3 = engine.interActionController.main[22].status
-
-    if (this.sensitivity === "mid") {
-
-      if ((n1 === true && n2 === true) || (n2 === true && n3 === true)) {
-        console.log("MsgBox answer is no.");
-        this.callback("no")
-      }
-
-      if ((y1 === true && y2 === true) || (y2 === true && y3 === true)) {
-        console.log("MsgBox answer is yes.");
-        this.callback("yes")
-      }
-
+    if (adjacentPair(no)) {
+      console.log("MsgBox answer is no.");
+      this.callback("no");
     }
 
-  };
+    if (adjacentPair(yes)) {
+      console.log("MsgBox answer is yes.");
+      this.callback("yes");
+    }
+  }
 
 }
