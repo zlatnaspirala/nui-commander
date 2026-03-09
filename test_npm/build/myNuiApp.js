@@ -4,19 +4,19 @@
 var _nuiCommander = require("nui-commander");
 
 var nuiCommander = {};
-nuiCommander.drawer = new _nuiCommander.canvasEngine(_nuiCommander.interActionController);
+nuiCommander.drawer = new _nuiCommander.CanvasEngine(_nuiCommander.interActionController);
 nuiCommander.drawer.draw();
 nuiCommander.indicatorsBlocks = _nuiCommander.indicatorsBlocks;
 nuiCommander.drawer.elements.push(nuiCommander.indicatorsBlocks);
-nuiCommander.drawer.elements.push(new _nuiCommander.nuiMsgBox("Do you love this project?", function (answer) {
+nuiCommander.drawer.elements.push(new _nuiCommander.NuiMsgBox("Do you love this project?", function (answer) {
   console.log(answer);
-  nuiCommander.drawer.removeElementByName("nuiMsgBox");
+  nuiCommander.drawer.removeElementByName("NuiMsgBox");
 
   if (answer == "yes") {
     console.log("Good answer is yes.");
     setTimeout(() => {
-      nuiCommander.drawer.elements.push(new _nuiCommander.nuiMsgBox("Do you wanna to activate some commander options?", function (answer) {
-        nuiCommander.drawer.removeElementByName("nuiMsgBox");
+      nuiCommander.drawer.elements.push(new _nuiCommander.NuiMsgBox("Do you wanna to activate some commander options?", function (answer) {
+        nuiCommander.drawer.removeElementByName("NuiMsgBox");
 
         if (answer == "yes") {
           alert("ok , interest idea.");
@@ -42,10 +42,10 @@ Object.defineProperty(exports, "indicatorsBlocks", {
     return _mainFunctionMenu.indicatorsBlocks;
   }
 });
-Object.defineProperty(exports, "canvasEngine", {
+Object.defineProperty(exports, "CanvasEngine", {
   enumerable: true,
   get: function () {
-    return _canvasEngine.canvasEngine;
+    return _canvasEngine.CanvasEngine;
   }
 });
 Object.defineProperty(exports, "DetectBrowser", {
@@ -60,16 +60,16 @@ Object.defineProperty(exports, "interActionController", {
     return _controller.interActionController;
   }
 });
-Object.defineProperty(exports, "nuiMsgBox", {
+Object.defineProperty(exports, "NuiMsgBox", {
   enumerable: true,
   get: function () {
-    return _nuiMsgBox.nuiMsgBox;
+    return _nuiMsgBox.NuiMsgBox;
   }
 });
 
 var _mainFunctionMenu = require("./scripts/controls/main-function-menu");
 
-var _canvasEngine = require("./scripts/canvasEngine");
+var _canvasEngine = require("./scripts/CanvasEngine");
 
 var _helper = require("./scripts/helper");
 
@@ -77,19 +77,19 @@ var _controller = require("./scripts/controller");
 
 var _nuiMsgBox = require("./scripts/controls/nui-msg-box");
 
-},{"./scripts/canvasEngine":3,"./scripts/controller":4,"./scripts/controls/main-function-menu":5,"./scripts/controls/nui-msg-box":6,"./scripts/helper":7}],3:[function(require,module,exports){
+},{"./scripts/CanvasEngine":3,"./scripts/controller":4,"./scripts/controls/main-function-menu":5,"./scripts/controls/nui-msg-box":6,"./scripts/helper":7}],3:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.canvasEngine = canvasEngine;
+exports.CanvasEngine = CanvasEngine;
 
 var _bufferLoad = require("./system/buffer-load");
 
 var _helper = require("./helper");
 
-function canvasEngine(interActionController, options) {
+function CanvasEngine(interActionController, options) {
   if (typeof options === 'undefined') {
     options = {
       domVisual: false
@@ -555,10 +555,10 @@ exports.indicatorsBlocks = indicatorsBlocks;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.nuiMsgBox = nuiMsgBox;
+exports.NuiMsgBox = NuiMsgBox;
 
-function nuiMsgBox(textMsg, callback) {
-  this.name = "nuiMsgBox";
+function NuiMsgBox(textMsg, callback) {
+  this.name = "NuiMsgBox";
   this.sensitivity = "mid";
   this.callback = callback;
   this.shemaX = 8;

@@ -1,23 +1,21 @@
 
 export function DetectBrowser() {
-
-  var HREFF,
-      HREFTXT = "unknown";
+  var HREFF, HREFTXT = "unknown";
   this.NAVIGATOR = navigator.userAgent;
   var NAV = navigator.userAgent;
   var gecko,
-      navIpad,
-      operatablet,
-      navIphone,
-      navFirefox,
-      navChrome,
-      navOpera,
-      navSafari,
-      navandroid,
-      mobile,
-      navMozilla,
-      navUbuntu,
-      navLinux;
+    navIpad,
+    operatablet,
+    navIphone,
+    navFirefox,
+    navChrome,
+    navOpera,
+    navSafari,
+    navandroid,
+    mobile,
+    navMozilla,
+    navUbuntu,
+    navLinux;
   navLinux = NAV.match(/Linux/gi);
   navUbuntu = NAV.match(/Ubuntu/gi);
   gecko = NAV.match(/gecko/gi);
@@ -35,86 +33,86 @@ export function DetectBrowser() {
   window["NOMOBILE"] = 0;
 
   var mobile = (/iphone|ipad|ipod|android|blackberry|mini|windows\sce|palm/i.test(navigator.userAgent.toLowerCase()));
-  if (mobile) {
-      var userAgent = navigator.userAgent.toLowerCase();
-      if ((userAgent.search("android") > -1) && (userAgent.search("mobile") > -1)) {
-          console.log("ANDROID MOBILE");
-      } else if ((userAgent.search("android") > -1) && !(userAgent.search("mobile") > -1)) {
-          console.log(" ANDROID TABLET ");
-          TYPEOFANDROID = 1;
-      }
+  if(mobile) {
+    var userAgent = navigator.userAgent.toLowerCase();
+    if((userAgent.search("android") > -1) && (userAgent.search("mobile") > -1)) {
+      console.log("ANDROID MOBILE");
+    } else if((userAgent.search("android") > -1) && !(userAgent.search("mobile") > -1)) {
+      console.log(" ANDROID TABLET ");
+      TYPEOFANDROID = 1;
+    }
 
   } else {
-      NOMOBILE = 1;
+    NOMOBILE = 1;
   }
   //  FIREFOX za android
-  if (navFirefox && navandroid && TYPEOFANDROID == 0) {
-      HREFF = "#";
-      HREFTXT = "mobile_firefox_android";
+  if(navFirefox && navandroid && TYPEOFANDROID == 0) {
+    HREFF = "#";
+    HREFTXT = "mobile_firefox_android";
   }
   //  FIREFOX za android T
-  if (navFirefox && navandroid && TYPEOFANDROID == 1) {
-      HREFF = "#";
-      HREFTXT = "mobile_firefox_android_tablet";
+  if(navFirefox && navandroid && TYPEOFANDROID == 1) {
+    HREFF = "#";
+    HREFTXT = "mobile_firefox_android_tablet";
   }
   // OPERA ZA ANDROID
-  if (navOpera && navandroid) {
-      HREFF = "#";
-      HREFTXT = "opera_mobile_android";
+  if(navOpera && navandroid) {
+    HREFF = "#";
+    HREFTXT = "opera_mobile_android";
   } // provera
   // OPERA ZA ANDROID TABLET
-  if (navOpera && navandroid && operatablet) {
-      HREFF = "#";
-      HREFTXT = "opera_mobile_android_tablet";
+  if(navOpera && navandroid && operatablet) {
+    HREFF = "#";
+    HREFTXT = "opera_mobile_android_tablet";
   } // provera
   //  safari mobile za IPHONE - i  safari mobile za IPAD i CHROME za IPAD
-  if (navSafari) {
-      var Iphonesafari = NAV.match(/iphone/gi);
-      if (Iphonesafari) {
-          HREFF = "#";
-          HREFTXT = "safari_mobile_iphone";
-      } else if (navIpad) {
-          HREFF = "#";
-          HREFTXT = "mobile_safari_chrome_ipad";
-      } else if (navandroid) {
-          HREFF = "#";
-          HREFTXT = "android_native";
-      }
+  if(navSafari) {
+    var Iphonesafari = NAV.match(/iphone/gi);
+    if(Iphonesafari) {
+      HREFF = "#";
+      HREFTXT = "safari_mobile_iphone";
+    } else if(navIpad) {
+      HREFF = "#";
+      HREFTXT = "mobile_safari_chrome_ipad";
+    } else if(navandroid) {
+      HREFF = "#";
+      HREFTXT = "android_native";
+    }
   }
   // TEST CHROME
-  if (navChrome && navSafari && navMozilla && TYPEOFANDROID == 1) {
-      HREFF = "#";
-      HREFTXT = "mobile_chrome_android_tablet";
+  if(navChrome && navSafari && navMozilla && TYPEOFANDROID == 1) {
+    HREFF = "#";
+    HREFTXT = "mobile_chrome_android_tablet";
   }
-  if (navChrome && navSafari && navMozilla && TYPEOFANDROID == 0) {
-      HREFF = "#";
-      HREFTXT = "mobile_chrome_android";
+  if(navChrome && navSafari && navMozilla && TYPEOFANDROID == 0) {
+    HREFF = "#";
+    HREFTXT = "mobile_chrome_android";
   }
-  if (navChrome && TYPEOFANDROID == 0) {
-      HREFF = "#";
-      HREFTXT = "chrome_browser";
+  if(navChrome && TYPEOFANDROID == 0) {
+    HREFF = "#";
+    HREFTXT = "chrome_browser";
   }
-  if (navMozilla && NOMOBILE == 1 && gecko && navFirefox) {
-      HREFF = "#";
-      HREFTXT = "firefox_desktop";
+  if(navMozilla && NOMOBILE == 1 && gecko && navFirefox) {
+    HREFF = "#";
+    HREFTXT = "firefox_desktop";
   }
-  if (navOpera && TYPEOFANDROID == 0 && !mobile) {
-      HREFF = "#";
-      HREFTXT = "opera_desktop";
+  if(navOpera && TYPEOFANDROID == 0 && !mobile) {
+    HREFF = "#";
+    HREFTXT = "opera_desktop";
   }
 
   //linux
-  if (navUbuntu && navMozilla && navFirefox && navLinux) {
-      HREFF = "#";
-      HREFTXT = "firefox_desktop_linux";
+  if(navUbuntu && navMozilla && navFirefox && navLinux) {
+    HREFF = "#";
+    HREFTXT = "firefox_desktop_linux";
   }
-  if (navMozilla && navLinux && navChrome && navSafari) {
-      HREFF = "#";
-      HREFTXT = "chrome_desktop_linux";
+  if(navMozilla && navLinux && navChrome && navSafari) {
+    HREFF = "#";
+    HREFTXT = "chrome_desktop_linux";
   }
-  if (navMozilla && navLinux && navChrome && navSafari && navOpera) {
-      HREFF = "#";
-      HREFTXT = "opera_desktop_linux";
+  if(navMozilla && navLinux && navChrome && navSafari && navOpera) {
+    HREFF = "#";
+    HREFTXT = "opera_desktop_linux";
   }
 
   /**
@@ -159,27 +157,17 @@ export var SCRIPT = {
   SCRIPT_ID: 0,
   SINHRO_LOAD: {},
   LOAD: function addScript(src) {
-      var s = document.createElement("script");
-      s.onload = function() {
-          SCRIPT.SCRIPT_ID++;
-          console.log("Script id loaded : " + SCRIPT.SCRIPT_ID + " with src : " + this.src);
-      };
-      s.setAttribute("src", src);
-      document.body.appendChild(s);
+    var s = document.createElement("script");
+    s.onload = function() {SCRIPT.SCRIPT_ID++};
+    s.setAttribute("src", src);
+    document.body.appendChild(s);
   }
 };
 
 export function asyncLoad(path, callback) {
-
-  if (typeof callback === "undefined") {
-    callback = function () { };
-  }
-
+  if(typeof callback === "undefined") callback = function() {};
   var nuiScript = document.createElement("script")
   nuiScript.src = path
   document.head.appendChild(nuiScript)
-  nuiScript.onload = function () {
-    callback()
-  }
-
+  nuiScript.onload = function() {callback()}
 }
