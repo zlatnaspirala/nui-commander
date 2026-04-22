@@ -1,6 +1,6 @@
 {
   "name": "test-nui-commander",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "test nui commander",
   "main": "index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "author": "Nikola Lukic",
   "license": "GPL-3.0-or-later",
   "dependencies": {
-    "nui-commander": "1.0.0",
+    "nui-commander": "1.0.1",
     "esmify": "^2.1.1"
   },
   "devDependencies": {

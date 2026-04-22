@@ -1,7 +1,7 @@
 {
   "name": "nui-commander",
   "short-name": "nui-commander",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Give command with hands low cpu usage based on block detect webcam samples. Top performance js code.",
   "main": "index.js",
   "scripts": {

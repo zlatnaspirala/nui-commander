@@ -1,10 +1,8 @@
 import {indicatorsBlocks} from "./scripts/controls/main-function-menu";
-import {CanvasEngine} from "./scripts/canvasEngine";
-// import {DetectBrowser} from "./scripts/helper";
 import {interActionController} from "./scripts/controller";
 import {NuiMsgBox} from "./scripts/controls/nui-msg-box";
 import {NuiCursor, NuiFaceDetect, NuiMenu, NuiRadialMenu, NuiSlider, NuiToggle} from "./scripts/controls/controls";
-
+import {CanvasEngine} from "./scripts/CanvasEngine";
 
 export let nuiCommander = {};
 window.nuiCommander = nuiCommander;
