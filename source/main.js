@@ -2,7 +2,7 @@ import {indicatorsBlocks} from "./scripts/controls/main-function-menu";
 import {interActionController} from "./scripts/controller";
 import {NuiMsgBox} from "./scripts/controls/nui-msg-box";
 import {NuiCursor, NuiFaceDetect, NuiMenu, NuiRadialMenu, NuiSlider, NuiToggle} from "./scripts/controls/controls";
-import {CanvasEngine} from "./scripts/CanvasEngine";
+import {CanvasEngine} from "./scripts/canvasEngine";
 
 export let nuiCommander = {};
 window.nuiCommander = nuiCommander;
@@ -12,36 +12,6 @@ export function loadNuiCommander() {
   nuiCommander.drawer.draw();
   nuiCommander.indicatorsBlocks = indicatorsBlocks;
   nuiCommander.drawer.elements.push(nuiCommander.indicatorsBlocks);
-
-  // nuiCommander.drawer.elements.push(
-  //   new NuiMsgBox( "Do you love this project?", function ( answer ) {
-  //     console.log( answer );
-  //     nuiCommander.drawer.removeElementByName( "NuiMsgBox" );
-
-  //     if ( answer == "yes" ) {
-  //       console.log( "Good answer is yes." );
-
-  //       setTimeout( () => {
-  //         nuiCommander.drawer.elements.push(
-  //           new NuiMsgBox(
-  //             "Do you wanna to activate voice commander?",
-  //             function ( answer ) {
-  //               nuiCommander.drawer.removeElementByName( "NuiMsgBox" );
-  //               if ( answer == "yes" ) {
-  //                 // root.vc.run()
-  //                 alert( "ok" );
-  //               }
-  //             }
-  //           )
-  //         );
-  //       }, 800 );
-  //     } else {
-  //       console.log( "Ok good buy." );
-  //       window.location.href = "https://google.com";
-  //     }
-  //   } )
-  // );
-
 
   const cursor = new NuiCursor({color: "255, 80, 80"});
   const slider = new NuiSlider("Volume", {
@@ -81,7 +51,6 @@ export function loadNuiCommander() {
   // const vk = new NuiVirtualKeyboard({
   //   onKey: (k) => console.log("key:", k)
   // })
-
 
   // const menu = new NuiRadialMenu([
   //   {label: "Play", action: () => play()},
