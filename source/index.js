@@ -4,6 +4,7 @@ import {interActionController} from "./scripts/controller";
 import {NuiMsgBox} from "./scripts/controls/nui-msg-box";
 import {NuiCursor, NuiFaceDetect, NuiMenu, NuiRadialMenu, NuiSlider, NuiToggle} from "./scripts/controls/controls";
 import {CanvasEngine} from "./scripts/canvasEngine";
+import {NuiButton} from "./scripts/controls/nui-button";
 
 export {
   indicatorsBlocks,
@@ -11,5 +12,6 @@ export {
   interActionController,
   NuiMsgBox,
   DetectBrowser,
-  NuiCursor, NuiFaceDetect, NuiMenu, NuiRadialMenu, NuiSlider, NuiToggle
+  NuiCursor, NuiFaceDetect, NuiMenu, NuiRadialMenu, NuiSlider, NuiToggle,
+  NuiButton
 }

@@ -2,12 +2,9 @@ import {BufferLoader} from "./system/buffer-load";
 import {getDom} from "./helper";
 
 export class CanvasEngine {
-
   constructor(interActionController, options = {domVisual: false}) {
     this.options = options;
     this.interActionController = interActionController;
-
-    // Canvas setup
     this.canvasDom = document.createElement("canvas");
     this.canvasDom.id = "drawer";
     this.canvasDom.width = 640;
@@ -15,34 +12,26 @@ export class CanvasEngine {
     this.canvasDom.style.cssText = "position:absolute;z-index:20;left:0;top:0;";
     this.ctx = this.canvasDom.getContext("2d");
     getDom("nui-commander-container").appendChild(this.canvasDom);
-
     this.systemOnPause = false;
     this.elements = [];
     this.notes = [];
-
     this.blockIndicatorSize = 8;
-
     // Cache canvas dimensions (avoids repeated DOM reads)
     this._canvasW = this.canvasDom.width;
     this._canvasH = this.canvasDom.height;
-
     // Precompute block cell dimensions
     this._cellW = this._canvasW / this.blockIndicatorSize;
     this._cellH = this._canvasH / this.blockIndicatorSize;
-
     // Blending state
     this._lastImageData = null;
-
     // Source/blended canvas references
     this._canvasSource = getDom("canvas-source");
     this._canvasBlended = getDom("canvas-blended");
     this._ctxSource = this._canvasSource.getContext("2d", {willReadFrequently: true});
     this._ctxBlended = this._canvasBlended.getContext("2d", {willReadFrequently: true});
-
     // Mirror video horizontally
     this._ctxSource.translate(this._canvasSource.width, 0);
     this._ctxSource.scale(-1, 1);
-
     // requestAnimationFrame polyfill
     window.requestAnimFrame = (
       window.requestAnimationFrame ||
@@ -52,13 +41,11 @@ export class CanvasEngine {
       window.msRequestAnimationFrame ||
       ((cb) => window.setTimeout(cb, 1000 / 60))
     );
-
     // Reusable diff buffer (avoids allocation every frame)
     this._blendedData = this._ctxSource.createImageData(
       this._canvasSource.width,
       this._canvasSource.height
     );
-
     // Build DOM indicators if domVisual is on
     if(this.options.domVisual) {
       for(let j = 0;j < this.blockIndicatorSize ** 2;j++) {
@@ -69,12 +56,19 @@ export class CanvasEngine {
         getDom("xylo").appendChild(domIndicator);
       }
     }
-
+    this._rafId = null;
+    this._drawTimeoutId = null;
+    this._mediaStream = null;
+    this._currFrameData = this._ctxSource.createImageData(this._canvasSource.width, this._canvasSource.height);
+    this._prevFrameData = this._ctxSource.createImageData(this._canvasSource.width, this._canvasSource.height);
+    this._hasPrevFrame = false;
     this._video = getDom("webcam");
     this._initUserMedia();
   }
 
-  // ─── Public API ────────────────────────────────────────────────────────────
+  removeElement(el) {
+    this.elements = this.elements.filter(e => e !== el);
+  }
 
   removeElementByName(name) {
     this.elements = this.elements.filter(el => el.name !== name);
@@ -91,7 +85,7 @@ export class CanvasEngine {
   draw() {
     this.ctx.clearRect(0, 0, this._canvasW, this._canvasH);
     this.elements.forEach(el => {el.draw(this); el.update(this);});
-    setTimeout(() => this.draw(), 20);
+    this._drawTimeoutId = setTimeout(() => this.draw(), 20);
   }
 
   update() {
@@ -99,26 +93,26 @@ export class CanvasEngine {
       this.drawVideo();
       this.blend();
       this.checkAreas();
-      requestAnimFrame(() => this.update());
+      this._rafId = requestAnimFrame(() => this.update());
     }
   }
 
   drawVideo() {
-    this._ctxSource.drawImage(
-      this._video, 0, 0,
-      this._video.width, this._video.height
-    );
-
+    this._ctxSource.drawImage(this._video, 0, 0, this._video.width, this._video.height)
   }
 
   blend() {
     const w = this._canvasSource.width;
     const h = this._canvasSource.height;
-    const sourceData = this._ctxSource.getImageData(0, 0, w, h);
-    if(!this._lastImageData) this._lastImageData = this._ctxSource.getImageData(0, 0, w, h);
-    this._differenceAccuracy(this._blendedData.data, sourceData.data, this._lastImageData.data);
+    const fresh = this._ctxSource.getImageData(0, 0, w, h);
+    this._currFrameData.data.set(fresh.data);
+    if(!this._hasPrevFrame) {
+      this._prevFrameData.data.set(this._currFrameData.data);
+      this._hasPrevFrame = true;
+    }
+    this._differenceAccuracy(this._blendedData.data, this._currFrameData.data, this._prevFrameData.data);
     this._ctxBlended.putImageData(this._blendedData, 0, 0);
-    this._lastImageData = sourceData;
+    this._prevFrameData.data.set(this._currFrameData.data);
   }
 
   // Default checkAreas — with optional DOM visual feedback
@@ -126,11 +120,9 @@ export class CanvasEngine {
     for(let r = 0;r < this.notes.length;r++) {
       const note = this.notes[r];
       if(!note.area.status) continue;
-
       const {x, y, w, h} = note.area;
       const blendedData = this._ctxBlended.getImageData(x, y, w, h);
       const average = this._calcAverage(blendedData.data);
-
       if(average > 10) {
         this._playSound(note);
         if(note.visual) note.visual.style.opacity = 1;
@@ -158,7 +150,14 @@ export class CanvasEngine {
     }
   }
 
-  // ─── Private ───────────────────────────────────────────────────────────────
+  dispose() {
+    if(this._rafId) cancelAnimationFrame(this._rafId);
+    if(this._drawTimeoutId) clearTimeout(this._drawTimeoutId);
+    this._mediaStream?.getTracks().forEach(t => t.stop());
+    this._soundContext?.close();
+    this.canvasDom.remove();
+    this.elements = [];
+  }
 
   _initUserMedia() {
     const hasGetUserMedia = !!(
@@ -167,12 +166,10 @@ export class CanvasEngine {
       navigator.mozGetUserMedia ||
       navigator.msGetUserMedia
     );
-
     if(!hasGetUserMedia) {
       console.warn("hasGetUserMedia FALSE");
       return;
     }
-    console.log("hasGetUserMedia TRUE");
 
     const onStream = (stream) => {
       this._video.srcObject = stream;
@@ -180,7 +177,6 @@ export class CanvasEngine {
     };
 
     const onError = (e) => alert("Webcam error!", e);
-
     if(navigator.mediaDevices?.getUserMedia) {
       navigator.mediaDevices.getUserMedia({video: true}).then(onStream, onError);
     } else if(navigator.getUserMedia) {
@@ -210,15 +206,13 @@ export class CanvasEngine {
   }
 
   _finishedLoading(bufferList) {
-    const totalCells = this.blockIndicatorSize ** 2;
-
+    // const totalCells = this.blockIndicatorSize ** 2;
     for(let j = 0;j < this.blockIndicatorSize;j++) {
       for(let d = 0;d < this.blockIndicatorSize;d++) {
         const i = j * this.blockIndicatorSize + d;
         const source = this._soundContext.createBufferSource();
         source.buffer = bufferList[i];
         source.connect(this._soundContext.destination);
-
         const note = {
           note: source,
           ready: true,
@@ -231,7 +225,6 @@ export class CanvasEngine {
             status: true
           }
         };
-
         this.notes.push(note);
       }
     }
@@ -239,7 +232,6 @@ export class CanvasEngine {
     if(!this.options.domVisual) {
       this.checkAreas = this.checkAreasOverride1;
     }
-
     this.update();
   }
 
@@ -258,9 +250,6 @@ export class CanvasEngine {
     if(entry?.action) entry.action();
   }
 
-  // ─── Image processing helpers ──────────────────────────────────────────────
-
-  /** Pixel-accurate motion diff using grayscale average + threshold */
   _differenceAccuracy(target, data1, data2) {
     const len = data1.length;
     if(len !== data2.length) return;
@@ -273,7 +262,6 @@ export class CanvasEngine {
     }
   }
 
-  /** Average brightness of a pixel region */
   _calcAverage(data) {
     let sum = 0;
     const pixels = data.length / 4;

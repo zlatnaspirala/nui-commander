@@ -1,18 +1,22 @@
+export function NuiButton(textMsg, callback, options) {
 
-export function nuiButton(textMsg, callback) {
+  options = options || {};
 
-  this.name = "nuiBotton";
-  this.sensitivity = "mid";
+  this.name = "NuiButton";
+  this.sensitivity = options.sensitivity || "mid";
   this.callback = callback;
   this.shemaX = 8;
   this.shemaY = 8;
   this.text = textMsg;
   this.myOpacity = 0.3;
 
-  this.discretePositionX = 4;
-  this.discretePositionY = 3;
-  this.discreteWidth = 3;
-  this.discreteHeight = 2;
+  this.textColor = options.textColor ? options.textColor : "rgba(0,0,0,1)";
+  this.font = options.font ? options.font : "30px sans-serif";
+  this.bgColor = options.bgColor ? options.bgColor : "rgba(122,122,222,0.4)";
+  this.discretePositionX = options.col !== undefined ? options.col : 4;
+  this.discretePositionY = options.row !== undefined ? options.row : 3;
+  this.discreteWidth = options.cols !== undefined ? options.cols : 3;
+  this.discreteHeight = options.rows !== undefined ? options.rows : 2;
 
   this.borderColors = {
     r: 10,
@@ -27,27 +31,27 @@ export function nuiButton(textMsg, callback) {
     engine.ctx.fillStyle = "rgba(" + this.borderColors.r + ", 150, " + this.borderColors.b + ", " + this.myOpacity + " )"
 
     engine.ctx.fillRect(
-    engine.getCanvasWidth(100) / this.shemaX * 4 - 10,
-    engine.getCanvasHeight(100) / this.shemaY * 2 - 10,
-    engine.getCanvasWidth(100) / this.shemaX * 3 + 20,
-    engine.getCanvasHeight(100) / this.shemaY * 1 + 20);
+      engine.getCanvasWidth(100) / this.shemaX * this.discretePositionX - 10,
+      engine.getCanvasHeight(100) / this.shemaY * this.discretePositionY - 10,
+      engine.getCanvasWidth(100) / this.shemaX * this.discreteWidth + 20,
+      engine.getCanvasHeight(100) / this.shemaY * this.discreteHeight + 20);
 
-    engine.ctx.font = "30px sans-serif";
-    engine.ctx.fillStyle = "white";
+    engine.ctx.font = this.font;
+    engine.ctx.fillStyle = this.bgColor;
     // engine.ctx.fillStyle = "rgba(210, 90, 110, " + this.myOpacity + " )"
 
     engine.ctx.fillRect(
-      engine.getCanvasWidth(100) / this.shemaX * 4,
-      engine.getCanvasHeight(100) / this.shemaY * 2,
-      engine.getCanvasWidth(100) / this.shemaX * 3,
-      engine.getCanvasHeight(100) / this.shemaY * 1);
+      engine.getCanvasWidth(100) / this.shemaX * this.discretePositionX,
+      engine.getCanvasHeight(100) / this.shemaY * this.discretePositionY,
+      engine.getCanvasWidth(100) / this.shemaX * this.discreteWidth,
+      engine.getCanvasHeight(100) / this.shemaY * this.discreteHeight);
 
-    engine.ctx.fillStyle = "black";
+    engine.ctx.fillStyle = this.textColor;
 
     engine.ctx.fillText(
       this.text,
-      engine.getCanvasWidth(100) / this.shemaX * 4,
-      engine.getCanvasHeight(100) / this.shemaY * 2.7,
+      engine.getCanvasWidth(100) / this.shemaX * this.discretePositionX,
+      engine.getCanvasHeight(100) / this.shemaY * (this.discretePositionY + 0.7),
       engine.getCanvasWidth(35),
       engine.getCanvasHeight(9));
 
@@ -55,40 +59,50 @@ export function nuiButton(textMsg, callback) {
 
   };
 
-  this.update = function(engine) {
-
-    var n1 = engine.interActionController.main[20].status
-    var n2 = engine.interActionController.main[21].status
-    var n3 = engine.interActionController.main[22].status
-
-    if (this.sensitivity === "mid") {
-
-      if ((n1 === true && n2 === true) || (n2 === true && n3 === true)) {
-        console.log("Button is triggered.");
-        this.callback("no")
-      }
-
-      if (n1 === true || n2 === true || n3 === true) {
-        if (this.borderColors.r < 255) {
-          this.borderColors.r += 20;
-        }
-        if (this.borderColors.b < 255) {
-          this.borderColors.b += 20;
-        }
-      } else {
-
-        if (this.borderColors.r > 0.1) {
-          this.borderColors.r -= 20;
-        }
-        if (this.borderColors.b > 0.1) {
-          this.borderColors.b -= 20;
-        }
-
-
-      }
-
+  this.getInteractionIndices = function() {
+    var indices = [];
+    for(var i = 0;i < this.discreteWidth;i++) {
+      var col = this.discretePositionX + i;
+      var row = this.discretePositionY;
+      indices.push(row * this.shemaX + col);
     }
-
+    return indices;
   };
 
+  this.update = function(engine) {
+    var indices = this.getInteractionIndices();
+
+    // read statuses safely (guard against out-of-range cells)
+    var statuses = indices.map(function(idx) {
+      var cell = engine.interActionController.main[idx];
+      return cell ? cell.status : false;
+    });
+
+    var anyTrue = statuses.some(function(s) {return s === true;});
+    var allTrue = statuses.every(function(s) {return s === true;});
+
+    // "mid": any adjacent pair true triggers
+    var pairTrue = false;
+    for(var i = 0;i < statuses.length - 1;i++) {
+      if(statuses[i] === true && statuses[i + 1] === true) {
+        pairTrue = true;
+        break;
+      }
+    }
+
+    var triggered = this.sensitivity === "low" ? allTrue : pairTrue;
+
+    if(triggered) {
+      console.log("Button is triggered.");
+      this.callback("no");
+    }
+
+    if(anyTrue) {
+      if(this.borderColors.r < 255) this.borderColors.r += 20;
+      if(this.borderColors.b < 255) this.borderColors.b += 20;
+    } else {
+      if(this.borderColors.r > 0.1) this.borderColors.r -= 20;
+      if(this.borderColors.b > 0.1) this.borderColors.b -= 20;
+    }
+  };
 }
