@@ -2,13 +2,13 @@ import {BufferLoader} from "./system/buffer-load";
 import {getDom} from "./helper";
 
 export class CanvasEngine {
-  constructor(interActionController, options = {domVisual: false}) {
+  constructor(interActionController, options = {domVisual: false, width: 640, height: 480}) {
     this.options = options;
     this.interActionController = interActionController;
     this.canvasDom = document.createElement("canvas");
     this.canvasDom.id = "drawer";
-    this.canvasDom.width = 640;
-    this.canvasDom.height = 480;
+    this.canvasDom.width = width;
+    this.canvasDom.height = height;
     this.canvasDom.style.cssText = "position:absolute;z-index:20;left:0;top:0;";
     this.ctx = this.canvasDom.getContext("2d");
     getDom("nui-commander-container").appendChild(this.canvasDom);
