@@ -12,13 +12,8 @@
   "author": "Nikola Lukic",
   "license": "This project is licensed under the Mozilla Public License 2.0. You can obtain one at https://mozilla.org/MPL/2.0/. Copyright (c) 2026 Nikola Lukić zlatnaspirala@gmail.com",
   "dependencies": {
-<<<<<<< Updated upstream
     "nui-commander": "1.0.1",
     "esbuild": "^0.25.0"
-=======
-    "nui-commander": "1.2.0",
-    "esmify": "^2.1.1"
->>>>>>> Stashed changes
   },
   "devDependencies": {
     "browser-resolve": "^2.0.0"
