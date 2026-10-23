@@ -10,7 +10,7 @@
     "nui-commander"
   ],
   "author": "Nikola Lukic",
-  "license": "GPL-3.0-or-later",
+  "license": "This project is licensed under the Mozilla Public License 2.0. You can obtain one at https://mozilla.org/MPL/2.0/. Copyright (c) 2026 Nikola Lukić zlatnaspirala@gmail.com",
   "dependencies": {
     "nui-commander": "1.0.1",
     "esmify": "^2.1.1"
