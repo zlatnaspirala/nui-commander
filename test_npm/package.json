@@ -4,7 +4,7 @@
   "description": "test nui commander",
   "main": "index.js",
   "scripts": {
-    "build": "browserify myNuiApp.js -p esmify > build/myNuiApp.js"
+    "build": "esbuild myNuiApp.js --bundle --platform=browser --outfile=build/myNuiApp.js"
   },
   "keywords": [
     "nui-commander"
@@ -13,7 +13,7 @@
   "license": "This project is licensed under the Mozilla Public License 2.0. You can obtain one at https://mozilla.org/MPL/2.0/. Copyright (c) 2026 Nikola Lukić zlatnaspirala@gmail.com",
   "dependencies": {
     "nui-commander": "1.0.1",
-    "esmify": "^2.1.1"
+    "esbuild": "^0.25.0"
   },
   "devDependencies": {
     "browser-resolve": "^2.0.0"
