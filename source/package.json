@@ -1,7 +1,7 @@
 {
   "name": "nui-commander",
   "short-name": "nui-commander",
-  "version": "1.1.13",
+  "version": "1.1.16",
   "description": "Give command with hands low cpu usage based on block detect webcam samples. Top performance js code .AI driven solutions from 2026",
   "main": "index.js",
   "scripts": {
@@ -18,17 +18,21 @@
     "Natural-User-Interface",
     "NUI",
     "control-hand",
+    "slider",
+    "nui-button",
+    "nui-games",
     "no-cost",
     "low-cpu",
     "nui-detect",
     "js",
+    "vanillaJS",
     "nui-commander",
     "commander",
     "javascript",
     "ECMA6"
   ],
   "author": "Nikola Lukic zlatnaspirala@gmail.com",
-  "license": "GPL-3.0",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/zlatnaspirala/voice-commander/issues"
   },

@@ -7,6 +7,7 @@ export class CanvasEngine {
     this.interActionController = interActionController;
     this.canvasDom = document.createElement("canvas");
     this.canvasDom.id = "drawer";
+    const {width = 640, height = 480} = options;
     this.canvasDom.width = width;
     this.canvasDom.height = height;
     this.canvasDom.style.cssText = "position:absolute;z-index:20;left:0;top:0;";
