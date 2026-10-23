@@ -5,8 +5,8 @@
   "description": "Give command with hands low cpu usage based on block detect webcam samples. Top performance js code .AI driven solutions from 2026",
   "main": "index.js",
   "scripts": {
-    "build.lib": "browserify index.js -p esmify > nui-commander.js",
-    "test": "browserify main.js -p esmify > build/nui-commander.js",
+    "build.lib": "esbuild index.js --bundle --platform=browser --format=iife --global-name=NuiCommander --outfile=build/nui-commander.js",
+    "test": "esbuild main.js --bundle --platform=browser --format=iife --global-name=NuiCommanderTest --outfile=build/test.js",
     "start": "http-server ./public/ -p 3000"
   },
   "repository": {
@@ -38,10 +38,9 @@
   },
   "homepage": "https://github.com/zlatnaspirala/voice-commander#readme",
   "dependencies": {
-    "esmify": "^2.1.1",
     "http-server": "^14.1.1"
   },
   "devDependencies": {
-    "browser-resolve": "^2.0.0"
+    "esbuild": "^0.25.0"
   }
 }
